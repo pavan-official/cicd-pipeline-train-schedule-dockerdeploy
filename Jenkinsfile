@@ -43,10 +43,10 @@ pipeline {
                 milestone(1)
                 withCredentials([sshUserPrivatekey(credentialsId: 'jenkins-ssh', usernameVariable: 'USERNAME')]) {
                     script {
-                        sh "ssh -i '$sshkey' $USERNAME@$prod_ip \"docker pull pavandocker90/train-schedule:${env.BUILD_NUMBER}\""
+                        sh "ssh -i '$jenkins-ssh'' $USERNAME@$prod_ip \"docker pull pavandocker90/train-schedule:${env.BUILD_NUMBER}\""
                         try {
-                            sh "ssh -i '$sshkey' $USERNAME@$prod_ip \"docker stop train-schedule\""
-                            sh "ssh -i '$sshkey' $USERNAME@$prod_ip $USERNAME@$prod_ip \"docker rm train-schedule\""
+                            sh "ssh -i '$jenkins-ssh' $USERNAME@$prod_ip \"docker stop train-schedule\""
+                            sh "ssh -i '$jenkins-ssh' $USERNAME@$prod_ip $USERNAME@$prod_ip \"docker rm train-schedule\""
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
