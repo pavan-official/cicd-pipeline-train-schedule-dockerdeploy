@@ -41,7 +41,7 @@ pipeline {
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
-                withCredentials([usernamePassword(credentialsId: 'jenkins-ssh', usernameVariable: 'USERNAME', keyFileVariable: 'sshkey')]) {
+                withCredentials([sshUserPrivatekey(credentialsId: 'jenkins-ssh', usernameVariable: 'USERNAME')]) {
                     script {
                         sh "ssh -i '$sshkey' $USERNAME@$prod_ip \"docker pull pavandocker90/train-schedule:${env.BUILD_NUMBER}\""
                         try {
